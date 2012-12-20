@@ -1,4 +1,6 @@
-.settings
-.classpath
-.project
+/.settings
+/.classpath
+/.project
 channels.xml
+/ffmpeg.exe
+/target
