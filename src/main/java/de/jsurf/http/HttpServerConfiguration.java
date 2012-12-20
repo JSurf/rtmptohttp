@@ -1,5 +1,7 @@
 package de.jsurf.http;
 
+import java.util.regex.Pattern;
+
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.configuration.reloading.FileChangedReloadingStrategy;
@@ -32,14 +34,18 @@ public class HttpServerConfiguration {
 	    	  return null;
 	      if (channelId.startsWith("/"))
 	    	  channelId = channelId.substring(1);
-	      log.debug("Searching input for channel: "+channelId);
+	      log.info("Searching input for channel: "+channelId);
 	      String input = confBackend.getString("channels/channel[id = '"+channelId+"']/input");
-	      log.debug("Channel input: "+input);
+	      if (input == null) {
+		      log.debug("Try general: "+input);
+		      input = confBackend.getString("channels/channel[id = 'default']/input");
+		      if (input != null) {
+		    	  log.debug("Found general: "+input);
+		          input = input.replaceAll(Pattern.quote("%channel%"), channelId);
+		      }
+	      }
+	    	  
+	      log.info("Channel input: "+input);
 	      return input;
-	      
-	      /*if ("/pro7".equals(channelId))
-			   return "rtmp://megaserver.youfreetv.net/live/pro7.stream swfUrl=http://www.youfreetv.net/medien/player.php?file=swf pageUrl=http://www.youfreetv.net/index.php?section=channel&value=pro7 swfVfy=1 live=1";
-		   else
-			   return null;*/			   
    }
 }
