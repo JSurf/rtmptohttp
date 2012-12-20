@@ -79,7 +79,7 @@ import org.jboss.netty.util.CharsetUtil;
           
           String[] parameters = new String[] { "-loglevel","quiet", "-i", inputStream, "-vcodec", "copy", "-acodec", "copy", "-vbsf", "h264_mp4toannexb","-f","mpegts","pipe:1" };
           
-          CommandLine cmdLine = CommandLine.parse("E:\\Mystuff\\mepo\\rtmpdump-2.4\\ffmpeg.exe");
+          CommandLine cmdLine = CommandLine.parse("ffmpeg.exe");
           cmdLine.addArguments(parameters); 
           DefaultExecutor executor = new DefaultExecutor();
           final ExecuteWatchdog watchDog = new ExecuteWatchdog(86400000); // One day timeout          

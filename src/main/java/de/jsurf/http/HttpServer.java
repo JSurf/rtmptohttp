@@ -18,6 +18,7 @@ package de.jsurf.http;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 
+import org.apache.log4j.Logger;
 import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 
@@ -31,17 +32,20 @@ import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
  */
 public class HttpServer {
 
+	private static final Logger log = Logger.getLogger(HttpServer.class);
+
     public static void main(String[] args) throws Exception {
         // Configure the server.
         ServerBootstrap bootstrap = new ServerBootstrap(
                 new NioServerSocketChannelFactory(
                         Executors.newCachedThreadPool(),
-                        Executors.newCachedThreadPool(),1000));
+                        Executors.newCachedThreadPool(),100));
 
         // Set up the pipeline factory.
         bootstrap.setPipelineFactory(new HttpServerPipelineFactory());
 
         // Bind and start to accept incoming connections.
         bootstrap.bind(new InetSocketAddress(9001));
+        log.info("HTTP Re-Streaming listening on port 9001");
     }
 }
