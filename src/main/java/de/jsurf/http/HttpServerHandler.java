@@ -77,8 +77,11 @@ import org.jboss.netty.util.CharsetUtil;
               return;        	  
           }
           
-          String[] parameters = new String[] { "-loglevel","quiet", "-i", inputStream, "-vcodec", "copy", "-acodec", "copy", "-vbsf", "h264_mp4toannexb","-f","mpegts","pipe:1" };
+          String path = new java.io.File(".").getCanonicalPath();
+          log.debug("Current execution path: "+path);
           
+          String[] parameters = new String[] { "-loglevel","error", "-i", inputStream, "-vcodec", "copy", "-acodec", "copy", "-vbsf", "h264_mp4toannexb","-f","mpegts","pipe:1" };
+
           CommandLine cmdLine = CommandLine.parse("ffmpeg.exe");
           cmdLine.addArguments(parameters); 
           DefaultExecutor executor = new DefaultExecutor();
